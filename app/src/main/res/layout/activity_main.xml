@@ -89,7 +89,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/messageView" />
 
             <EditText
-                android:id="@+id/editTextText"
+                android:id="@+id/restaurantEdit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -116,7 +116,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/streetnameEdit"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextText" />
+                app:layout_constraintTop_toBottomOf="@+id/restaurantEdit" />
 
             <EditText
                 android:id="@+id/streetnameEdit"
@@ -171,8 +171,8 @@
 
             <Button
                 android:id="@+id/saveButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="90dp"
+                android:layout_height="38dp"
                 android:layout_marginStart="159dp"
                 android:layout_marginTop="44dp"
                 android:layout_marginEnd="159dp"
@@ -180,19 +180,20 @@
                 android:text="SAVE"
                 app:layout_constraintBottom_toTopOf="@+id/nextButton"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/stateEdit" />
 
             <Button
                 android:id="@+id/nextButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="90dp"
+                android:layout_height="38dp"
                 android:layout_marginStart="159dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="12dp"
                 android:layout_marginEnd="159dp"
                 android:text="NEXT"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/saveButton" />
         </androidx.constraintlayout.widget.ConstraintLayout>
