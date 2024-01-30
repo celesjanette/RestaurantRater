@@ -34,31 +34,35 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Next Button Click Listener
         Button nextButton = findViewById(R.id.nextButton);
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String restaurantName = restaurantNameEditText.getText().toString();
                 Intent intent = new Intent(MainActivity.this, RateDish.class);
+                intent.putExtra("RESTAURANT_NAME", restaurantName);
+                startActivity(intent);
                 startActivity(intent);
             }
         });
     }
 
-    private void saveRestaurantInfo() {
-        // Get user input
+    private long saveRestaurantInfo() {
         String restaurantName = restaurantNameEditText.getText().toString();
         String streetName = streetNameEditText.getText().toString();
         String city = cityEditText.getText().toString();
         String state = stateEditText.getText().toString();
         String zipCode = zipCodeEditText.getText().toString();
 
-        // Save the restaurant information to the database
         RestaurantDataSource dataSource = new RestaurantDataSource(this);
         dataSource.open();
 
         long restaurantId = dataSource.insertRestaurant(restaurantName, streetName, city, state, zipCode);
-
         dataSource.close();
+        Intent intent = new Intent(MainActivity.this, RateDish.class);
+        intent.putExtra("RESTAURANT_NAME", restaurantName);
+        startActivity(intent);
+
+        return restaurantId;
     }
 }

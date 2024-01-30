@@ -28,4 +28,13 @@ public class RestaurantDataSource {
 
         return database.insert("restaurant", null, values);
     }
+    public long insertRating(long restaurantId, String dishName, String dishType, float rating) {
+        ContentValues values = new ContentValues();
+        values.put("restaurantID", restaurantId); // Assuming the column name is "restaurantID"
+        values.put("dishname", dishName);
+        values.put("dishtype", dishType);
+        values.put("rating", rating);
+
+        return database.insert("rate", null, values);
+    }
 }
