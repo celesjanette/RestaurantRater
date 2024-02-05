@@ -16,7 +16,7 @@ public class RestaurantDBHelper extends SQLiteOpenHelper {
             + "city text, state text, zipcode text); ";
     private static final String CREATE_TABLE_RATE =
             "create table rate (_id integer primary key autoincrement, "
-            + "dishname text not null, dishtype text, rating int, "
+            + "dishname text not null, dishtype text, rating float, "
             + "restaurantID integer, "
             + "foreign key (restaurantId) references restaurant(_id));";
 
