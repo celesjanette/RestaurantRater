@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".RateDish" />
-        <activity android:name=".FinishDialog" />
+        <activity android:name=".RatedMealsActivity" />
     </application>
 
 </manifest>

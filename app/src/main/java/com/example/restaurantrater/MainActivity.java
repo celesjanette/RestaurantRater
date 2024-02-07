@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private RestaurantDataSource dataSource;
@@ -36,16 +37,27 @@ public class MainActivity extends AppCompatActivity {
         zipCodeEditText = findViewById(R.id.zipcodeEdit);
 
         initSaveButton();
+        Button viewListButton = findViewById(R.id.viewListButton);
+        viewListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(MainActivity.this, RatedMealsActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initTextChangeEvents() {
         final EditText etRestaurantName = findViewById(R.id.restaurantEdit);
         etRestaurantName.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
             @Override
             public void afterTextChanged(Editable s) {
@@ -56,10 +68,12 @@ public class MainActivity extends AppCompatActivity {
         final EditText etStreetName = findViewById(R.id.streetnameEdit);
         etStreetName.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
             @Override
             public void afterTextChanged(Editable s) {
@@ -70,10 +84,12 @@ public class MainActivity extends AppCompatActivity {
         final EditText etCity = findViewById(R.id.cityEdit);
         etCity.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
             @Override
             public void afterTextChanged(Editable s) {
@@ -84,10 +100,12 @@ public class MainActivity extends AppCompatActivity {
         final EditText etState = findViewById(R.id.stateEdit);
         etState.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
             @Override
             public void afterTextChanged(Editable s) {
@@ -98,10 +116,12 @@ public class MainActivity extends AppCompatActivity {
         final EditText etZipCode = findViewById(R.id.zipcodeEdit);
         etZipCode.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
             @Override
             public void afterTextChanged(Editable s) {
@@ -117,6 +137,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 boolean wasSuccessful;
                 RestaurantDataSource ds = new RestaurantDataSource(MainActivity.this);
+                saveRestaurant();
+                // Get the list of rated meals for the current restaurant
+                ArrayList<Rate> ratedMeals = getAllRatedMeals();
+                // Proceed with your logic using the rated meals ArrayList
             }
         });
     }
@@ -135,16 +159,27 @@ public class MainActivity extends AppCompatActivity {
 
             Intent intent = new Intent(MainActivity.this, RateDish.class);
             intent.putExtra("RESTAURANT_NAME", restaurantName);
+            intent.putExtra("RESTAURANT_ID", restaurantId); // Pass the restaurant ID to RateDish activity
             startActivity(intent);
         } catch (Exception e) {
             e.printStackTrace();
-
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    private ArrayList<Rate> getAllRatedMeals() {
+        ArrayList<Rate> ratedMeals = new ArrayList<>();
 
+        // Get the restaurant ID from the currentRestaurant object or any other source
+        long restaurantId = -1; // Set
+        try {
+            dataSource.open();
+            ratedMeals = dataSource.getRatedMeals(restaurantId);
+            dataSource.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return ratedMeals;
     }
-}
+    }
+

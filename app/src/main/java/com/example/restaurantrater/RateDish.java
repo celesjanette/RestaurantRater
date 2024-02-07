@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import java.util.ArrayList;
 
 public class RateDish extends AppCompatActivity {
     private TextView restaurantFillView;
@@ -26,6 +27,7 @@ public class RateDish extends AppCompatActivity {
     private RestaurantDataSource dataSource;
     private long restaurantId = -1;
     private long ratingId = -1;
+    private ArrayList<Rate> ratedMeals;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +60,6 @@ public class RateDish extends AppCompatActivity {
             }
         });
 
-
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,6 +79,12 @@ public class RateDish extends AppCompatActivity {
         });
 
         initTextChangeEvents();
+
+        // Retrieve all rated meals for the restaurant
+        if (restaurantId != -1) {
+            ratedMeals = dataSource.getRatedMeals(restaurantId);
+            Log.d("RatedMeals", "Number of rated meals: " + ratedMeals.size());
+        }
     }
 
     private void initTextChangeEvents() {
@@ -119,25 +126,26 @@ public class RateDish extends AppCompatActivity {
             RestaurantDataSource dataSource = new RestaurantDataSource(this);
             dataSource.open();
 
-                long newRatingId = dataSource.insertRating(restaurantId, dishName, dishType, rating);
+            long newRatingId = dataSource.insertRating(restaurantId, dishName, dishType, rating);
 
-                if (newRatingId != -1) {
-                    ratingId = newRatingId;
-                    showMessage("Dish rating added successfully");
-                    navigateToMainActivity();
-                } else {
-                    showMessage("Failed to add dish rating");
-                }
-
-                dataSource.close();
+            if (newRatingId != -1) {
+                ratingId = newRatingId;
+                showMessage("Dish rating added successfully");
+                navigateToMainActivity();
             } else {
-                showMessage("Invalid restaurant ID");
+                showMessage("Failed to add dish rating");
             }
 
-            dishNameEditText.getText().clear();
-            dishTypeEditText.getText().clear();
-            ratingBar.setRating(0.0f);
+            dataSource.close();
+        } else {
+            showMessage("Invalid restaurant ID");
         }
+
+        dishNameEditText.getText().clear();
+        dishTypeEditText.getText().clear();
+        ratingBar.setRating(0.0f);
+    }
+
     private void navigateToMainActivity() {
         Intent intent = new Intent(RateDish.this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
